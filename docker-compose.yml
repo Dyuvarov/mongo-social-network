@@ -1,0 +1,12 @@
+version: '3'
+services:
+  mongo:
+    image: mongo:latest
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=admin
+      - MONGO_INITDB_ROOT_PASSWORD=admin
+    volumes:
+      - ./dockervolume/db:/data/db
+      - ./dockervolume/dblogs:/var/log/mongodb
+    ports:
+      - "27017:27017"
