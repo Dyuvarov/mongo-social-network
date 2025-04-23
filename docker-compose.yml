@@ -3,9 +3,11 @@ services:
   mongo:
     image: mongo:latest
     environment:
+      - MONGO_INITDB_DATABASE=socialnetwork
       - MONGO_INITDB_ROOT_USERNAME=admin
       - MONGO_INITDB_ROOT_PASSWORD=admin
     volumes:
+      - ./db/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js
       - ./dockervolume/db:/data/db
       - ./dockervolume/dblogs:/var/log/mongodb
     ports:

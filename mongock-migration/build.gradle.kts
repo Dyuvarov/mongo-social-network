@@ -9,6 +9,8 @@ plugins {
 group = "com.dyuvarov"
 version = "0.0.1"
 
+val mongockVersion = "5.5.1"
+
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(21)
@@ -20,8 +22,18 @@ repositories {
     mavenCentral()
 }
 
+dependencyManagement {
+    imports {
+        mavenBom("io.mongock:mongock-bom:5.5.1")
+    }
+}
+
 dependencies {
-    api("org.springframework.boot:spring-boot-starter")
+    //db
+    api("org.springframework.boot:spring-boot-starter-data-mongodb:3.4.1")
+    api("io.mongock:mongock-springboot-v3:$mongockVersion")
+    api("io.mongock:mongodb-springdata-v4-driver:$mongockVersion")
+
     api("org.jetbrains.kotlin:kotlin-reflect")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -47,6 +59,10 @@ tasks.register<Jar>("sourcesJar") {
 tasks.register<Jar>("javadocJar") {
     archiveClassifier.set("javadoc")
     from(tasks.javadoc)
+}
+
+tasks.register<Wrapper>("wrapper") {
+    gradleVersion = "7.5.1"
 }
 
 publishing {
